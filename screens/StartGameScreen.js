@@ -8,19 +8,24 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
-  Alert
+  Alert,
+  Slider,
+  StatusBar
 } from 'react-native';
 import Card from '../components/Card';
 import colors from '../constants/colors';
 import Input from '../components/Input';
+import Inscription from './InscriptionScreen';
 const StartGameScreen = props => {
   const [GameNumber, setNumber] = useState('');
+  const [sliderValue, setSliderValue] = useState(50);
   const TextInputHandler = textInput => {
     if (isNaN(textInput)) {
       Alert.alert(' warning !! ', ' enter a number ', [{ text: 'cancel' }]);
     }
     setNumber(textInput.replace(/[^0-9]/g, ''));
   };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -56,6 +61,27 @@ const StartGameScreen = props => {
             </View>
           </View>
         </Card>
+        <Card style={styles.InputContainer}>
+          <Text>test some components</Text>
+          <Text>Slider</Text>
+          <Slider
+            style={styles.slider}
+            maximumValue={100}
+            minimumValue={0}
+            onValueChange={val => console.log(Math.floor(val))}
+            value={sliderValue}
+            disabled={false}
+          />
+          <Text> we hide and control status bar </Text>
+          <View>
+            <StatusBar
+              hidden={true}
+              animated={true}
+              backgroundColor='blue'
+              barStyle='light-content'
+            />
+          </View>
+        </Card>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -87,6 +113,10 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: 'center'
+  },
+  slider: {
+    width: '100%',
+    marginVertical: 10
   }
 });
 export default StartGameScreen;
